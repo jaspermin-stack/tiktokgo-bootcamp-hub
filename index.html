@@ -154,14 +154,14 @@ body::after{
 .hook-item[open] summary .chev{transform:rotate(90deg)}
 .hook-body{padding:0 18px 18px 18px;animation:hookOpen .25s ease}
 @keyframes hookOpen{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
-.hook-def{color:var(--text-dim);font-size:.9rem;line-height:1.55;margin-bottom:14px}
+.hook-def{color:var(--text-dim);font-size:.9rem;line-height:1.55;margin-bottom:14px;overflow-wrap:break-word;word-break:break-word}
 .hook-ex{display:flex;gap:10px;align-items:flex-start;margin-top:10px}
-.hook-ex p{font-size:.88rem;line-height:1.5;color:var(--text);margin:0}
+.hook-ex p{flex:1 1 auto;min-width:0;font-size:.88rem;line-height:1.5;color:var(--text);margin:0;overflow-wrap:break-word;word-break:break-word}
 .ex-tag{flex-shrink:0;font-size:.68rem;font-weight:800;letter-spacing:.05em;border-radius:6px;padding:3px 8px;margin-top:1px}
 .ex-tag.acc{background:rgba(37,244,238,.12);border:1px solid rgba(37,244,238,.4);color:var(--cyan)}
 .ex-tag.ttd{background:rgba(254,44,85,.12);border:1px solid rgba(254,44,85,.4);color:#ff6b89}
 .hook-guide-title{font-size:1.2rem;font-weight:800;margin:8px 0 16px}
-.table-scroll{overflow-x:auto;border-radius:14px;border:1px solid var(--border)}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;border-radius:14px;border:1px solid var(--border)}
 .hook-table{width:100%;border-collapse:collapse;font-size:.9rem;min-width:560px}
 .hook-table th,.hook-table td{text-align:left;padding:13px 16px;border-bottom:1px solid var(--border);vertical-align:top}
 .hook-table thead th{background:rgba(255,255,255,.04);color:var(--cyan);font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:.78rem}
@@ -446,6 +446,17 @@ body::after{
   .tasks-layout{grid-template-columns:1fr}
   .poi{padding:36px 26px}
   .section{padding:70px 0}
+}
+@media(max-width:600px){
+  .res-card{padding:22px 16px}
+  .res-icon{font-size:1.9rem}
+  .res-card h3{font-size:1.1rem}
+  .hook-item summary{padding:13px 14px;font-size:.95rem;gap:10px}
+  .hook-body{padding:0 14px 16px 14px}
+  .hook-ex{gap:8px}
+  .hook-guide-title{font-size:1.08rem}
+  .hook-table{min-width:480px}
+  .hook-table th,.hook-table td{padding:11px 13px}
 }
 @media(max-width:520px){
   .hero{padding:130px 0 70px}
