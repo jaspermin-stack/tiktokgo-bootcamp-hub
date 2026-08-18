@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TikTok GO Creator Bootcamp Hub</title>
+<meta name="description" content="All-in-one hub for TikTok GO Creator Bootcamp: webinar schedule, takeaways, live tasks, leaderboard, Top POIs and showcase." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+/* ============================================================
+   THEME TOKENS
+   ============================================================ */
+:root{
+  --bg:#07070c;
+  --bg-2:#0d0d15;
+  --surface:#12121d;
+  --surface-2:#1a1a29;
+  --border:rgba(255,255,255,.08);
+  --border-strong:rgba(255,255,255,.16);
+  --text:#f5f6fa;
+  --text-dim:#a7a9be;
+  --text-mute:#6e708a;
+  --cyan:#25f4ee;
+  --pink:#fe2c55;
+  --grad:linear-gradient(135deg,#25f4ee 0%,#7a5cff 48%,#fe2c55 100%);
+  --grad-soft:linear-gradient(135deg,rgba(37,244,238,.16),rgba(254,44,85,.16));
+  --shadow:0 18px 50px -12px rgba(0,0,0,.7);
+  --radius:20px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4,.font-display{font-family:'Outfit','Inter',sans-serif}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+::selection{background:var(--pink);color:#fff}
+
+/* ambient background glow */
+body::before{
+  content:"";position:fixed;inset:0;z-index:-2;
+  background:
+    radial-gradient(60vw 60vw at 12% -5%,rgba(37,244,238,.14),transparent 60%),
+    radial-gradient(55vw 55vw at 92% 8%,rgba(254,44,85,.15),transparent 60%),
+    radial-gradient(50vw 50vw at 50% 110%,rgba(122,92,255,.14),transparent 60%);
+}
+body::after{
+  content:"";position:fixed;inset:0;z-index:-1;opacity:.4;
+  background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:44px 44px;
+  -webkit-mask-image:radial-gradient(circle at 50% 30%,#000,transparent 85%);
+          mask-image:radial-gradient(circle at 50% 30%,#000,transparent 85%);
+}
+
+/* ============================================================
+   LAYOUT HELPERS
+   ============================================================ */
+.wrap{width:min(1180px,92vw);margin-inline:auto}
+.section{padding:96px 0}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.74rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--cyan);margin-bottom:16px;
+}
+.eyebrow::before{content:"";width:26px;height:2px;background:var(--grad);border-radius:2px}
+.section-title{font-size:clamp(1.9rem,4vw,3rem);font-weight:800;letter-spacing:-.02em;line-height:1.08}
+.section-sub{color:var(--text-dim);max-width:60ch;margin-top:14px;font-size:1.03rem}
+.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 0;transition:.35s;
+}
+.nav-inner{width:min(1180px,92vw);margin-inline:auto;display:flex;align-items:center;justify-content:space-between}
+.nav.scrolled{backdrop-filter:blur(18px);background:rgba(7,7,12,.72);border-bottom:1px solid var(--border)}
+.brand{display:flex;align-items:center;gap:11px;font-family:'Outfit';font-weight:800;font-size:1.12rem}
+.brand .logo{
+  width:38px;height:38px;border-radius:11px;display:grid;place-items:center;
+  background:var(--grad);color:#04040a;font-weight:900;font-size:1.15rem;box-shadow:0 6px 18px rgba(254,44,85,.4)
+}
+.brand small{display:block;font-family:'Inter';font-weight:500;font-size:.66rem;letter-spacing:.14em;color:var(--text-mute);text-transform:uppercase}
+.nav-links{display:flex;gap:6px;align-items:center}
+.nav-links a{
+  padding:9px 15px;border-radius:10px;font-size:.9rem;font-weight:500;color:var(--text-dim);transition:.2s;
+}
+.nav-links a:hover{color:var(--text);background:rgba(255,255,255,.06)}
+.nav-cta{
+  background:var(--grad);color:#04040a !important;font-weight:700 !important;
+  box-shadow:0 8px 22px rgba(37,244,238,.25)
+}
+.nav-cta:hover{transform:translateY(-1px)}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:8px}
+.burger span{width:24px;height:2px;background:var(--text);border-radius:2px;transition:.3s}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{position:relative;padding:150px 0 90px;text-align:center}
+.hero .badge{
+  display:inline-flex;align-items:center;gap:9px;padding:8px 16px;border-radius:999px;
+  background:var(--grad-soft);border:1px solid var(--border-strong);
+  font-size:.82rem;font-weight:600;color:var(--text);margin-bottom:26px
+}
+.pulse{width:9px;height:9px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 0 rgba(37,244,238,.6);animation:pulse 1.8s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(37,244,238,.55)}70%{box-shadow:0 0 0 12px rgba(37,244,238,0)}100%{box-shadow:0 0 0 0 rgba(37,244,238,0)}}
+.hero h1{font-size:clamp(2.6rem,7vw,5.4rem);font-weight:900;line-height:1;letter-spacing:-.03em;margin-bottom:22px}
+.hero p{max-width:60ch;margin:0 auto 34px;color:var(--text-dim);font-size:clamp(1rem,2vw,1.2rem)}
+.hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:9px;padding:14px 26px;border-radius:13px;
+  font-weight:700;font-size:.98rem;cursor:pointer;border:1px solid transparent;transition:.25s
+}
+.btn-primary{background:var(--grad);color:#04040a;box-shadow:0 12px 30px rgba(254,44,85,.3)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 38px rgba(254,44,85,.42)}
+.btn-ghost{background:rgba(255,255,255,.05);border-color:var(--border-strong);color:var(--text)}
+.btn-ghost:hover{background:rgba(255,255,255,.1);transform:translateY(-2px)}
+.btn-community{background:linear-gradient(135deg,#5865F2 0%,#7a5cff 55%,#25f4ee 130%);color:#fff !important;border:1px solid rgba(255,255,255,.18) !important;box-shadow:0 8px 22px rgba(88,101,242,.4)}
+.btn-community:hover{transform:translateY(-2px);box-shadow:0 14px 32px rgba(88,101,242,.55),0 0 18px rgba(37,244,238,.35)}
+.btn-community svg{flex-shrink:0}
+/* Helpful Resources */
+.res-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px;margin-top:44px}
+.res-card{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:28px;position:relative;overflow:hidden;transition:.28s}
+.res-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--grad)}
+.res-card:hover{transform:translateY(-4px);border-color:var(--border-strong);box-shadow:var(--shadow)}
+.res-icon{font-size:2.2rem;margin-bottom:14px}
+.res-card h3{font-size:1.2rem;font-weight:700;margin-bottom:10px}
+.res-card p{color:var(--text-dim);font-size:.94rem;line-height:1.55;margin-bottom:16px;flex:1}
+.res-tip{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;font-size:.83rem;font-weight:600;color:var(--cyan);background:rgba(37,244,238,.08);border:1px solid rgba(37,244,238,.25);border-radius:999px;padding:6px 13px;margin-bottom:16px}
+.res-go{font-weight:700;font-size:.92rem;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.res-article{grid-column:1/-1;text-align:left}
+.res-article:hover{transform:none;box-shadow:none;border-color:var(--border)}
+.res-article p{flex:none}
+.res-lead{color:var(--text-dim);font-size:1rem;line-height:1.6;margin-bottom:26px;max-width:none}
+.hook-accordion{display:flex;flex-direction:column;gap:10px;margin-bottom:34px}
+.hook-item{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s ease}
+.hook-item[open]{border-color:var(--border-strong)}
+.hook-item summary{display:flex;align-items:center;gap:12px;cursor:pointer;list-style:none;padding:15px 18px;font-size:1rem;font-weight:700;color:var(--text);transition:background .2s ease}
+.hook-item summary::-webkit-details-marker{display:none}
+.hook-item summary:hover{background:rgba(255,255,255,.04)}
+.hook-num{flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:rgba(37,244,238,.12);border:1px solid rgba(37,244,238,.35);color:var(--cyan);font-size:.82rem;font-weight:800}
+.chev{margin-left:auto;flex-shrink:0;color:var(--text-dim);font-size:.95rem;transition:transform .25s ease}
+.hook-item[open] summary .chev{transform:rotate(90deg)}
+.hook-body{padding:0 18px 18px 18px;animation:hookOpen .25s ease}
+@keyframes hookOpen{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.hook-def{color:var(--text-dim);font-size:.9rem;line-height:1.55;margin-bottom:14px}
+.hook-ex{display:flex;gap:10px;align-items:flex-start;margin-top:10px}
+.hook-ex p{font-size:.88rem;line-height:1.5;color:var(--text);margin:0}
+.ex-tag{flex-shrink:0;font-size:.68rem;font-weight:800;letter-spacing:.05em;border-radius:6px;padding:3px 8px;margin-top:1px}
+.ex-tag.acc{background:rgba(37,244,238,.12);border:1px solid rgba(37,244,238,.4);color:var(--cyan)}
+.ex-tag.ttd{background:rgba(254,44,85,.12);border:1px solid rgba(254,44,85,.4);color:#ff6b89}
+.hook-guide-title{font-size:1.2rem;font-weight:800;margin:8px 0 16px}
+.table-scroll{overflow-x:auto;border-radius:14px;border:1px solid var(--border)}
+.hook-table{width:100%;border-collapse:collapse;font-size:.9rem;min-width:560px}
+.hook-table th,.hook-table td{text-align:left;padding:13px 16px;border-bottom:1px solid var(--border);vertical-align:top}
+.hook-table thead th{background:rgba(255,255,255,.04);color:var(--cyan);font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:.78rem}
+.hook-table tbody tr:last-child td{border-bottom:none}
+.hook-table td:first-child{font-weight:700;color:var(--text)}
+.hook-table td:nth-child(2){color:var(--text-dim)}
+.hook-table td:last-child{color:var(--text-dim)}
+.hero-stats{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:56px}
+.stat{
+  background:var(--surface);border:1px solid var(--border);border-radius:16px;
+  padding:20px 26px;min-width:150px;text-align:left
+}
+.stat .n{font-family:'Outfit';font-size:1.8rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .l{font-size:.82rem;color:var(--text-mute);margin-top:2px}
+
+/* ============================================================
+   TIMELINE / WEBINARS
+   ============================================================ */
+.timeline{position:relative;margin-top:54px}
+.timeline::before{
+  content:"";position:absolute;left:26px;top:8px;bottom:8px;width:2px;
+  background:linear-gradient(var(--cyan),rgba(122,92,255,.5),var(--pink));border-radius:2px
+}
+.tl-item{position:relative;padding-left:70px;margin-bottom:26px}
+.tl-dot{
+  position:absolute;left:16px;top:20px;width:22px;height:22px;border-radius:50%;
+  background:var(--bg);border:3px solid var(--cyan);z-index:2;display:grid;place-items:center
+}
+.tl-item.upcoming .tl-dot{border-color:var(--text-mute)}
+.tl-item.live .tl-dot{border-color:var(--pink);animation:pulse 1.8s infinite}
+.wcard{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:22px 24px;transition:.28s;position:relative;overflow:hidden
+}
+.wcard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--grad);opacity:.9}
+.tl-item.upcoming .wcard::before{background:var(--text-mute);opacity:.5}
+.wcard:hover{transform:translateY(-3px);border-color:var(--border-strong);box-shadow:var(--shadow)}
+.wcard-top{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:flex-start}
+.wcard h3{font-size:1.22rem;font-weight:700;margin-bottom:4px}
+.wcard .date{font-size:.85rem;color:var(--cyan);font-weight:600;display:flex;align-items:center;gap:6px}
+.tl-item.upcoming .wcard .date{color:var(--text-dim)}
+.tag{
+  font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:5px 11px;border-radius:999px;white-space:nowrap
+}
+.tag.past{background:rgba(37,244,238,.12);color:var(--cyan);border:1px solid rgba(37,244,238,.3)}
+.tag.live{background:rgba(254,44,85,.15);color:#ff6b89;border:1px solid rgba(254,44,85,.4)}
+.tag.up{background:rgba(255,255,255,.06);color:var(--text-dim);border:1px solid var(--border-strong)}
+.wcard p.desc{color:var(--text-dim);font-size:.95rem;margin:12px 0 16px}
+.rec{
+  display:inline-flex;align-items:center;gap:9px;padding:10px 16px;border-radius:11px;
+  font-size:.88rem;font-weight:600;transition:.2s
+}
+.rec.available{background:var(--grad);color:#04040a}
+.rec.available:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(37,244,238,.3)}
+.rec.pending{background:rgba(255,255,255,.04);border:1px dashed var(--border-strong);color:var(--text-mute);cursor:not-allowed}
+.wcard-actions{display:flex;gap:10px;flex-wrap:wrap}
+.rec.join{background:rgba(254,44,85,.12);border:1px solid rgba(254,44,85,.4);color:#ff6b89}
+.rec.join:hover{background:rgba(254,44,85,.2);transform:translateY(-2px)}
+.rec.join-live{background:var(--grad);color:#04040a;box-shadow:0 8px 20px rgba(254,44,85,.35)}
+.rec.join-live:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(254,44,85,.5)}
+.class-videos{margin-top:18px;padding-top:16px;border-top:1px dashed var(--border-strong)}
+.cv-title{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;background:none;border:none;cursor:pointer;font-size:.8rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--cyan);padding:0;font-family:inherit;transition:opacity .2s}
+.cv-title:hover{opacity:.8}
+.cv-arrow{font-size:.72rem;transition:transform .35s ease}
+.cv-title[aria-expanded="true"] .cv-arrow{transform:rotate(180deg)}
+.cv-wrap{display:grid;grid-template-rows:0fr;transition:grid-template-rows .38s ease,margin-top .38s ease,opacity .3s ease;margin-top:0;opacity:0;overflow:hidden}
+.cv-wrap.open{grid-template-rows:1fr;margin-top:12px;opacity:1}
+.cv-wrap>*{min-height:0}
+.cv-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:0;padding:0}
+.cv-list a{display:flex;align-items:center;gap:11px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:11px;padding:10px 14px;font-size:.9rem;color:var(--text);transition:.2s}
+.cv-list a:hover{border-color:var(--border-strong);background:rgba(37,244,238,.06);transform:translateX(3px)}
+.cv-ic{flex-shrink:0}
+.cv-cap{flex:1;font-weight:600}
+.cv-go{flex-shrink:0;color:var(--cyan);font-weight:700}
+
+/* ============================================================
+   TAKEAWAYS
+   ============================================================ */
+.tk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;margin-top:50px}
+.tk{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px;transition:.28s;position:relative
+}
+.tk:hover{transform:translateY(-4px);border-color:var(--border-strong);box-shadow:var(--shadow)}
+.tk .ico{
+  width:52px;height:52px;border-radius:14px;display:grid;place-items:center;font-size:1.5rem;
+  background:var(--grad-soft);border:1px solid var(--border-strong);margin-bottom:16px
+}
+.tk h3{font-size:1.12rem;font-weight:700;margin-bottom:8px}
+.tk p{color:var(--text-dim);font-size:.93rem}
+.tk .pill{position:absolute;top:22px;right:22px;font-size:.66rem;font-weight:700;color:var(--text-mute);letter-spacing:.1em;text-transform:uppercase}
+
+/* ============================================================
+   TASKS + LEADERBOARD
+   ============================================================ */
+.tasks-layout{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:50px;align-items:start}
+.block-head{display:flex;align-items:center;gap:11px;margin-bottom:20px}
+.block-head h3{font-size:1.35rem;font-weight:800}
+.block-head .dot{width:10px;height:10px;border-radius:50%;background:var(--pink);box-shadow:0 0 12px var(--pink)}
+.task{
+  background:var(--surface);border:1px solid var(--border);border-radius:16px;
+  padding:18px 20px;margin-bottom:14px;transition:.24s
+}
+.task:hover{border-color:var(--border-strong);transform:translateX(4px)}
+.task-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:10px}
+.task h4{font-size:1.05rem;font-weight:700}
+.task .type{font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:999px;background:rgba(122,92,255,.16);color:#b9a8ff;border:1px solid rgba(122,92,255,.3);white-space:nowrap}
+.task .type.ldb{background:rgba(254,44,85,.15);color:#ff6b89;border-color:rgba(254,44,85,.35)}
+.task-meta{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:.82rem;color:var(--text-mute);margin-bottom:10px}
+.task-meta b{color:var(--text-dim);font-weight:600}
+.reward{display:flex;align-items:center;gap:8px;font-size:.9rem;color:var(--text);background:var(--grad-soft);border:1px solid var(--border);padding:9px 13px;border-radius:10px}
+.reward .r-ico{color:var(--cyan)}
+.progressbar{height:6px;border-radius:6px;background:rgba(255,255,255,.07);margin-top:12px;overflow:hidden}
+.progressbar span{display:block;height:100%;background:var(--grad);border-radius:6px}
+
+.lb{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.lb table{width:100%;border-collapse:collapse}
+.lb th{
+  text-align:left;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-mute);
+  padding:16px 18px;border-bottom:1px solid var(--border);font-weight:700
+}
+.lb td{padding:14px 18px;border-bottom:1px solid var(--border);font-size:.92rem}
+.lb tr:last-child td{border-bottom:0}
+.lb tr:hover td{background:rgba(255,255,255,.03)}
+.rank{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-family:'Outfit';font-weight:800;font-size:.9rem;background:var(--surface-2);color:var(--text-dim)}
+.rank.g1{background:linear-gradient(135deg,#ffd25f,#ff9d2e);color:#1a1300}
+.rank.g2{background:linear-gradient(135deg,#dfe4ee,#a8b0c4);color:#12131a}
+.rank.g3{background:linear-gradient(135deg,#e59b6b,#c06a35);color:#1a0c02}
+.lb .creator{display:flex;align-items:center;gap:11px;font-weight:600}
+.lb .av{width:32px;height:32px;border-radius:50%;background:var(--grad);display:grid;place-items:center;font-size:.8rem;font-weight:800;color:#04040a}
+.lb .pts{font-family:'Outfit';font-weight:800;color:var(--cyan)}
+.lb-note{padding:14px 18px;font-size:.8rem;color:var(--text-mute);background:rgba(255,255,255,.02);text-align:center}
+
+/* ============================================================
+   POI TOOL
+   ============================================================ */
+.poi{
+  margin-top:20px;position:relative;overflow:hidden;border-radius:26px;
+  background:linear-gradient(135deg,rgba(37,244,238,.1),rgba(254,44,85,.12));
+  border:1px solid var(--border-strong);padding:52px;display:flex;gap:40px;align-items:center;flex-wrap:wrap
+}
+.poi::after{content:"";position:absolute;right:-80px;top:-80px;width:320px;height:320px;border-radius:50%;background:var(--grad);opacity:.16;filter:blur(30px)}
+.poi-body{flex:1;min-width:280px;position:relative;z-index:2}
+.poi-body h2{font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;margin-bottom:14px;line-height:1.1}
+.poi-body p{color:var(--text-dim);max-width:52ch;margin-bottom:26px;font-size:1.03rem}
+.poi-feats{display:flex;gap:22px;flex-wrap:wrap;margin-bottom:28px}
+.poi-feat{display:flex;align-items:center;gap:8px;font-size:.9rem;color:var(--text-dim)}
+.poi-feat .fi{color:var(--cyan);font-size:1.1rem}
+.btn-poi{
+  font-size:1.05rem;padding:16px 32px;background:var(--grad);color:#04040a;border-radius:14px;
+  font-weight:800;display:inline-flex;align-items:center;gap:11px;box-shadow:0 14px 34px rgba(37,244,238,.3);transition:.25s
+}
+.btn-poi:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 20px 44px rgba(254,44,85,.4)}
+.poi-visual{position:relative;z-index:2;width:210px;height:210px;flex-shrink:0;display:grid;place-items:center}
+.poi-ring{position:absolute;inset:0;border-radius:50%;border:2px dashed rgba(255,255,255,.2);animation:spin 22s linear infinite}
+.poi-ring.b{inset:26px;border-color:rgba(37,244,238,.35);animation-duration:16s;animation-direction:reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.poi-pin{font-size:4.4rem;filter:drop-shadow(0 10px 20px rgba(254,44,85,.5))}
+
+/* ============================================================
+   SHOWCASE (coming soon)
+   ============================================================ */
+.showcase{
+  margin-top:50px;border:1.5px dashed var(--border-strong);border-radius:26px;
+  padding:70px 40px;text-align:center;background:var(--surface);position:relative;overflow:hidden
+}
+.showcase::before{content:"";position:absolute;inset:0;background:var(--grad-soft);opacity:.4;z-index:0}
+.showcase>*{position:relative;z-index:1}
+.sc-icon{
+  width:96px;height:96px;border-radius:26px;margin:0 auto 26px;display:grid;place-items:center;
+  font-size:2.8rem;background:var(--bg-2);border:1px solid var(--border-strong);box-shadow:var(--shadow)
+}
+.showcase h3{font-size:1.8rem;font-weight:800;margin-bottom:12px}
+.showcase p{color:var(--text-dim);max-width:52ch;margin:0 auto 26px}
+.sc-badge{display:inline-flex;align-items:center;gap:9px;padding:10px 20px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid var(--border-strong);font-size:.85rem;font-weight:600;color:var(--text-dim)}
+.sc-skeletons{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;max-width:640px;margin:38px auto 0}
+.sk{aspect-ratio:9/13;border-radius:16px;background:linear-gradient(115deg,rgba(255,255,255,.04) 30%,rgba(255,255,255,.09) 50%,rgba(255,255,255,.04) 70%);background-size:220% 100%;animation:shimmer 2.2s infinite;border:1px solid var(--border);display:grid;place-items:center;color:var(--text-mute);font-size:1.6rem}
+@keyframes shimmer{to{background-position:-220% 0}}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer{border-top:1px solid var(--border);padding:50px 0 40px;margin-top:40px}
+.footer-inner{display:flex;justify-content:space-between;gap:28px;flex-wrap:wrap;align-items:flex-start}
+.footer p{color:var(--text-mute);font-size:.88rem;max-width:44ch;margin-top:12px}
+.footer-links{display:flex;gap:44px;flex-wrap:wrap}
+.footer-col h4{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);margin-bottom:14px}
+.footer-col a{display:block;color:var(--text-mute);font-size:.9rem;padding:4px 0;transition:.2s}
+.footer-col a:hover{color:var(--cyan)}
+.copyright{margin-top:38px;padding-top:24px;border-top:1px solid var(--border);color:var(--text-mute);font-size:.82rem;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+
+/* reveal on scroll */
+.reveal{opacity:0;transform:translateY(26px);transition:.7s cubic-bezier(.16,.84,.44,1)}
+.reveal.in{opacity:1;transform:none}
+/* never keep content hidden when printing / saving to PDF or if JS is off */
+@media print{
+  .reveal{opacity:1 !important;transform:none !important}
+  .nav{position:static;background:none;border:0}
+  body::before,body::after{display:none}
+  .section{padding:34px 0;break-inside:avoid}
+}
+.no-js .reveal{opacity:1;transform:none}
+
+/* campaign / prize / live-leaderboard */
+.campaign-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:50px;align-items:start}
+.camp-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:26px}
+.camp-name{font-size:1.35rem;font-weight:800;margin:2px 0 18px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.camp-meta{list-style:none;display:flex;flex-direction:column;gap:12px}
+.camp-meta li{display:flex;justify-content:space-between;gap:16px;align-items:baseline;padding-bottom:12px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.camp-meta li:last-child{border-bottom:0;padding-bottom:0}
+.camp-meta span{color:var(--text-mute);font-size:.86rem}
+.camp-meta b{color:var(--text);font-weight:600;font-size:.95rem;text-align:right}
+.prize-table{display:flex;flex-direction:column;gap:10px}
+.prize-row{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;border-radius:12px;background:var(--surface-2);border:1px solid var(--border)}
+.prize-row .prize-rank{font-weight:600;font-size:.98rem}
+.prize-row .prize-amt{font-family:'Outfit';font-weight:800;font-size:1.1rem;color:var(--cyan)}
+.prize-row.gold{background:linear-gradient(135deg,rgba(255,210,95,.18),rgba(255,157,46,.1));border-color:rgba(255,210,95,.4)}
+.prize-row.gold .prize-amt{color:#ffd25f}
+.prize-row.silver{background:linear-gradient(135deg,rgba(223,228,238,.14),rgba(168,176,196,.08));border-color:rgba(223,228,238,.3)}
+.prize-row.bronze{background:linear-gradient(135deg,rgba(229,155,107,.16),rgba(192,106,53,.08));border-color:rgba(229,155,107,.35)}
+.prize-row.total{background:var(--grad-soft);border-color:var(--border-strong);margin-top:4px}
+.prize-row.total .prize-rank{font-weight:800}
+.prize-row.total .prize-amt{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lb-live{margin-top:26px;border-radius:26px;background:linear-gradient(135deg,rgba(37,244,238,.08),rgba(254,44,85,.1));border:1px solid var(--border-strong);padding:38px}
+.lb-live-body p{color:var(--text-dim);max-width:60ch;margin:6px 0 22px;font-size:1rem}
+.lb-actions{display:flex;gap:14px;flex-wrap:wrap}
+.btn-outline{display:inline-flex;align-items:center;gap:9px;padding:14px 26px;border-radius:14px;font-weight:700;font-size:.98rem;background:rgba(255,255,255,.05);border:1px solid var(--border-strong);color:var(--text);transition:.25s}
+.btn-outline:hover{background:rgba(255,255,255,.1);transform:translateY(-2px)}
+@media(max-width:860px){.campaign-grid{grid-template-columns:1fr}.lb-live{padding:26px}}
+.ltl-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:stretch;margin-top:50px}
+.ltl-card{background:var(--surface);border:1px solid var(--border);border-radius:26px;padding:32px}
+.ltl-card>p{color:var(--text-dim);max-width:60ch;margin:6px 0 22px;font-size:1rem}
+.ltl-sub{margin:26px 0 14px;font-size:.78rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim)}
+.req-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin:0;padding:0}
+.req-list li{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:14px;padding:12px 16px;font-size:.92rem;color:var(--text)}
+.req-list li b{color:var(--cyan);font-weight:700}
+.req-ic{font-size:1.15rem;flex-shrink:0}
+.task-list{display:flex;flex-direction:column;gap:12px;margin:0}
+.task-item{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:14px;padding:14px 16px;transition:.25s}
+.task-item:hover{border-color:var(--border-strong);transform:translateY(-2px)}
+.task-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.task-name{font-weight:800;font-size:1rem;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.task-period{font-size:.82rem;color:var(--text-dim);white-space:nowrap}
+.task-vv{font-size:.85rem;color:var(--text-dim);margin:6px 0 10px}
+.task-subs{display:flex;gap:10px;flex-wrap:wrap}
+.task-sub{font-size:.86rem;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:999px;padding:5px 12px}
+.task-sub b{color:var(--cyan)}
+.task-total{margin-top:12px;padding-top:12px;border-top:1px dashed var(--border);font-size:.92rem;font-weight:700;color:var(--text)}
+.task-total b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+@media(max-width:860px){.ltl-grid{grid-template-columns:1fr;gap:22px}.ltl-card{padding:26px}}
+
+/* ============================================================
+   FLOATING COMMUNITY CTA
+   ============================================================ */
+.community-fab{
+  position:fixed;right:24px;bottom:24px;z-index:200;
+  display:inline-flex;align-items:center;gap:11px;
+  padding:14px 20px;border-radius:999px;
+  font-weight:800;font-size:.95rem;color:#fff;
+  background:linear-gradient(135deg,#5865F2 0%,#7a5cff 55%,#25f4ee 130%);
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 10px 30px rgba(88,101,242,.45),0 0 0 1px rgba(37,244,238,.15);
+  transition:transform .25s ease,box-shadow .25s ease;animation:fabIn .5s ease both
+}
+.community-fab:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 16px 40px rgba(88,101,242,.6),0 0 22px rgba(37,244,238,.4)}
+.community-ic{flex-shrink:0}
+@keyframes fabIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media(max-width:860px){
+  .nav-links{
+    position:fixed;top:70px;right:4vw;left:4vw;flex-direction:column;align-items:stretch;gap:4px;
+    background:rgba(13,13,21,.97);backdrop-filter:blur(18px);border:1px solid var(--border);
+    border-radius:18px;padding:14px;transform:translateY(-14px);opacity:0;pointer-events:none;transition:.3s
+  }
+  .nav-links.open{transform:none;opacity:1;pointer-events:auto}
+  .nav-links a{padding:13px 16px}
+  .burger{display:flex}
+  .tasks-layout{grid-template-columns:1fr}
+  .poi{padding:36px 26px}
+  .section{padding:70px 0}
+}
+@media(max-width:520px){
+  .hero{padding:130px 0 70px}
+  .stat{min-width:130px;padding:16px 20px}
+  .poi-visual{width:150px;height:150px}
+  .tl-item{padding-left:58px}
+  .community-fab{right:14px;bottom:14px;padding:13px}
+  .community-txt{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#top" class="brand">
+      <span class="logo">GO</span>
+      <span>Bootcamp Hub<small>TikTok GO Creator Academy</small></span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="#schedule">Schedule</a>
+      <a href="#takeaways">Takeaways</a>
+      <a href="#tasks">Tasks &amp; Leaderboard</a>
+      <a href="#pois">Top POIs</a>
+      <a href="#resources">Resources</a>
+      <a href="#showcase">Showcase</a>
+      <a href="https://discord.gg/Q7e5PEVHtm" target="_blank" rel="noopener" class="nav-cta btn-community"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M20.317 4.369a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.375-.445.865-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.009c.12.099.246.198.373.292a.077.077 0 0 1-.006.127c-.598.35-1.22.645-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.056c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.331c-1.183 0-2.157-1.086-2.157-2.42 0-1.332.955-2.418 2.157-2.418 1.21 0 2.176 1.095 2.157 2.419 0 1.333-.956 2.419-2.157 2.419zm7.975 0c-1.183 0-2.157-1.086-2.157-2.42 0-1.332.955-2.418 2.157-2.418 1.21 0 2.176 1.095 2.157 2.419 0 1.333-.946 2.419-2.157 2.419z"/></svg>Join Our Community</a>
+    </div>
+    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero" id="top">
+  <div class="wrap">
+    <span class="badge"><span class="pulse"></span> Live Cohort · Aug 3 – Aug 29, 2026</span>
+    <h1>The <span class="grad-text">TikTok&nbsp;GO</span><br/>Creator Bootcamp Hub</h1>
+    <p>Everything you need in one place — webinar recordings, actionable takeaways, live tasks &amp; leaderboards, hot POIs and a creator showcase. Go from Level 0 to pro, fast. 🚀</p>
+    <div class="hero-actions">
+      <a href="#schedule" class="btn btn-primary">📅 View Webinar Schedule</a>
+      <a href="https://discord.gg/Q7e5PEVHtm" target="_blank" rel="noopener" class="btn btn-community"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M20.317 4.369a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.375-.445.865-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.009c.12.099.246.198.373.292a.077.077 0 0 1-.006.127c-.598.35-1.22.645-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.056c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.331c-1.183 0-2.157-1.086-2.157-2.42 0-1.332.955-2.418 2.157-2.418 1.21 0 2.176 1.095 2.157 2.419 0 1.333-.956 2.419-2.157 2.419zm7.975 0c-1.183 0-2.157-1.086-2.157-2.42 0-1.332.955-2.418 2.157-2.418 1.21 0 2.176 1.095 2.157 2.419 0 1.333-.946 2.419-2.157 2.419z"/></svg>Join Our Community</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="n">4</div><div class="l">Bootcamp Weeks</div></div>
+      <div class="stat"><div class="n">6+</div><div class="l">Live Webinars</div></div>
+      <div class="stat"><div class="n">$400+</div><div class="l">In Task Rewards</div></div>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- ===================== SCHEDULE ===================== -->
+<section class="section" id="schedule">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">Webinar Schedule</span>
+      <h2 class="section-title">Every session, <span class="grad-text">one timeline</span></h2>
+      <p class="section-sub">Classes run every <b>Monday &amp; Wednesday</b> at 4pm PST / 6pm CST / 7pm EST. Recording links go live after each session.</p>
+    </div>
+    <div class="timeline" id="timeline"><!-- rendered from JS: WEBINARS --></div>
+  </div>
+</section>
+
+<!-- ===================== TAKEAWAYS ===================== -->
+<section class="section" id="takeaways" style="background:linear-gradient(var(--bg),var(--bg-2),var(--bg))">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">Easy Takeaways</span>
+      <h2 class="section-title">Tips that <span class="grad-text">turn views into sales</span></h2>
+      <p class="section-sub">The greatest hits from every class, distilled into quick, actionable insights you can apply to your very next post.</p>
+    </div>
+    <div class="tk-grid" id="takeaways-grid"><!-- rendered from JS: TAKEAWAYS --></div>
+  </div>
+</section>
+
+<!-- ===================== TASKS + LEADERBOARD ===================== -->
+<section class="section" id="tasks">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">Live Tasks &amp; Leaderboard</span>
+      <h2 class="section-title">Compete, post, <span class="grad-text">get paid</span></h2>
+      <p class="section-sub">The current live campaign, prize breakdown, and quick links to the real-time leaderboard and creator tasks.</p>
+    </div>
+    <div class="reveal ltl-grid">
+      <div class="ltl-card">
+        <div class="block-head"><span class="dot"></span><h3>🏆 Leaderboard</h3></div>
+        <h4 class="camp-name">Bootcamp Post Showdown 🔥 — Aug</h4>
+        <ul class="camp-meta">
+          <li><span>🗓 Period</span><b>Aug 5 – Aug 16, 2026</b></li>
+          <li><span># Hashtag</span><b>#tiktokgobonus</b></li>
+        </ul>
+        <div class="ltl-sub">Prize Structure</div>
+        <div class="prize-table">
+          <div class="prize-row gold"><span class="prize-rank">🥇 TOP 1</span><span class="prize-amt">$400</span></div>
+          <div class="prize-row silver"><span class="prize-rank">🥈 TOP 2</span><span class="prize-amt">$200</span></div>
+          <div class="prize-row bronze"><span class="prize-rank">🥉 TOP 3</span><span class="prize-amt">$100</span></div>
+          <div class="prize-row"><span class="prize-rank">4️⃣ 4th Place</span><span class="prize-amt">$50</span></div>
+          <div class="prize-row"><span class="prize-rank">5️⃣ 5th Place</span><span class="prize-amt">$25</span></div>
+        </div>
+        <div class="ltl-sub">Requirements</div>
+        <ul class="req-list">
+          <li><span class="req-ic">👁</span>Videos must be <b>&gt;300 views</b></li>
+          <li><span class="req-ic">⏱</span>Videos must be <b>longer than 15 seconds</b></li>
+        </ul>
+      </div>
+      <div class="ltl-card">
+        <div class="block-head"><span class="dot"></span><h3>📋 Creator Tasks</h3></div>
+        <p>Complete these tasks during the campaign window to unlock cash rewards for every milestone you hit.</p>
+        <div class="task-list">
+          <div class="task-item">
+            <div class="task-head"><span class="task-name">Bootcamp Next Level A 🚀</span><span class="task-period">Aug 13 – Aug 19</span></div>
+            <div class="task-vv">👁 300 views required</div>
+            <div class="task-subs"><span class="task-sub">1 post → <b>$4</b></span><span class="task-sub">2 posts → <b>$4</b></span></div>
+            <div class="task-total">💰 Total Rewards: <b>$8</b></div>
+          </div>
+          <div class="task-item">
+            <div class="task-head"><span class="task-name">Bootcamp Next Level B 🚀</span><span class="task-period">Aug 13 – Aug 19</span></div>
+            <div class="task-vv">👁 300 views required</div>
+            <div class="task-subs"><span class="task-sub">4 posts → <b>$8</b></span><span class="task-sub">10 posts → <b>$22</b></span></div>
+            <div class="task-total">💰 Total Rewards: <b>$30</b></div>
+          </div>
+          <div class="task-item">
+            <div class="task-head"><span class="task-name">Bootcamp Next Level C 🚀</span><span class="task-period">Aug 13 – Aug 19</span></div>
+            <div class="task-vv">👁 300 views required</div>
+            <div class="task-subs"><span class="task-sub">1 post → <b>$4</b></span><span class="task-sub">2 posts → <b>$4</b></span></div>
+            <div class="task-total">💰 Total Rewards: <b>$8</b></div>
+          </div>
+          <div class="task-item">
+            <div class="task-head"><span class="task-name">Bootcamp Next Level D 🚀</span><span class="task-period">Aug 13 – Aug 19</span></div>
+            <div class="task-vv">👁 300 views required</div>
+            <div class="task-subs"><span class="task-sub">6 posts → <b>$12</b></span><span class="task-sub">12 posts → <b>$24</b></span></div>
+            <div class="task-total">💰 Total Rewards: <b>$36</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TOP POIs ===================== -->
+<section class="section" id="pois" style="background:linear-gradient(var(--bg),var(--bg-2),var(--bg))">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">Creator Tool</span>
+      <h2 class="section-title">Top <span class="grad-text">POIs</span> Finder</h2>
+    </div>
+    <div class="poi reveal">
+      <div class="poi-body">
+        <h2>Find the hottest places to film 🔥</h2>
+        <p>Discover the top-performing Points of Interest for TikTok GO — the venues, tours and experiences driving the most sales right now. Pick a POI, plan your shoot, and post content that converts.</p>
+        <div class="poi-feats">
+          <span class="poi-feat"><span class="fi">📍</span> Curated hot POIs</span>
+          <span class="poi-feat"><span class="fi">📈</span> High-sales potential</span>
+          <span class="poi-feat"><span class="fi">⚡</span> Updated regularly</span>
+        </div>
+        <a href="https://item-trailers-holes-mpg.trycloudflare.com/" target="_blank" rel="noopener" class="btn-poi">Open Top POIs Tool →</a>
+      </div>
+      <div class="poi-visual">
+        <span class="poi-ring"></span><span class="poi-ring b"></span>
+        <span class="poi-pin">📍</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== HELPFUL RESOURCES ===================== -->
+<section class="section" id="resources">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">Helpful Resources</span>
+      <h2 class="section-title">Guides &amp; <span class="grad-text">references</span></h2>
+    </div>
+    <div class="res-grid reveal">
+      <article class="res-card res-article">
+        <div class="res-icon">🪝</div>
+        <h3>Hooks and When to Use Them</h3>
+        <p class="res-lead">Ten proven hook types to stop the scroll in the first second — each with a definition plus a real example for Accommodation (<span class="ex-tag acc">ACC</span>) and Things-to-Do (<span class="ex-tag ttd">TTD</span>) content.</p>
+        <div class="hook-accordion">
+          <details class="hook-item">
+            <summary><span class="hook-num">1</span> Audience Call-Out<span class="chev">▸</span></summary>
+            <div class="hook-body">
+              <p class="hook-def">Call out a specific viewer identity, desire, or situation, then ask them to stop scrolling.</p>
+              <div class="hook-ex"><span class="ex-tag acc">ACC</span><p>"If you're planning a beach vacation but hate crowded resorts, stop scrolling. This beachfront hotel might be the quietest stay I've found."</p></div>
+              <div class="hook-ex"><span class="ex-tag ttd">TTD</span><p>"If you're visiting Orlando with kids under 10, stop scrolling. This theme park area saved our whole day."</p></div>
+            </div>
+          </details>
+          <details class="hook-item">
+            <summary><span class="hook-num">2</span> Best Way / Best Place<span class="chev">▸</span></summary>
+            <div class="hook-body">
+              <p class="hook-def">Open with "the best way to…" or "the best place for…" and immediately promise a practical recommendation. Works when the video helps viewers make a choice.</p>
+              <div class="hook-ex"><span class="ex-tag acc">ACC</span><p>"The best way to book this resort is not the cheapest room. It's this ocean-view category, and here's why."</p></div>
+              <div class="hook-ex"><span class="ex-tag ttd">TTD</span><p>"The best way to do this theme park in one day is to start at the back, not the front."</p></div>
+            </div>
+          </details>
+          <details class="hook-item">
+            <summary><span class="hook-num">3</span> Curiosity Discovery<span class="chev">▸</span></summary>
+            <div class="hook-body">
+              <p class="hook-def">Start with a surprising discovery, hidden feature, or "I can't believe…" line — a "never seen anything like this" suspense builder.</p>
+              <div class="hook-ex"><span class="ex-tag acc">ACC</span><p>"I can't believe this hotel hides its best view behind the spa hallway. Most guests walk right past it."</p></div>
+              <div class="hook-ex"><span class="ex-tag ttd">TTD</span><p>"I can't believe this attraction has a secret entrance that cuts the wait almost in half."</p></div>
+            </div>
+          </details>
+          <details class="hook-item">
+            <summary><span class="hook-num">4</span> Problem + Solution<span class="chev">▸</span></summary>
+            <div class="hook-body">
+              <p class="hook-def">Name a pain point first, then promise the solution. Includes "Do you have problems with ___?" and "Here's the perfect solution."</p>
+              <div class="hook-ex"><span class="ex-tag acc">ACC</span><p>"Do you hate resorts where every good chair is gone by 8 a.m.? This hotel solved that problem in a surprisingly smart way."</p></div>
+              <div class="hook-ex"><span class="ex-tag ttd">TTD</span><p>"Do you hate wasting half your theme park day in lines? This is the route I'd use if I only had one day."</p></div>
+            </div>
+          </details>
+          <details class="hook-item">
+            <summary><span class="hook-num">5</span> Mistake / Red Flag Warning<span class="chev">▸</span></summary>
+            <div class="hook-body">
+              <p class="hook-def">Open with a mistake, red flag, or warning: "Don't make this mistake," "red flags to look for," "you need to stop doing this."</p>
+              <div class="hook-ex"><span class="ex-tag acc">ACC</span><p>"Don't book this hotel before you check where your room faces. The difference between these two towers is huge."</p></div>
+              <div class="hook-ex"><span class="ex-tag ttd">TTD</span><p>"Don't make this mistake when visiting this theme park: arriving at opening time is already too late for this ride."</p></div>
+            </div>
+          </details>
+          <details class="hook-item">
+            <summary><span class="hook-num">6</span> Listicle Promise<span class="chev">▸</span></summary>
+            <div class="hook-body">
+              <p class="hook-def">Lead with a numbered list that promises quick value: "5 restaurants that belong on your bucket list," "3 things to do before…"</p>
+              <div class="hook-ex"><span class="ex-tag acc">ACC</span><p>"Three things I wish I knew before staying at this beachfront resort."</p></div>
+              <div class="hook-ex"><span class="ex-tag ttd">TTD</span><p>"Five attractions inside this park that are actually worth the wait."</p></div>
+            </div>
+          </details>
+          <details class="hook-item">
+            <summary><span class="hook-num">7</span> Visual Motion Hook<span class="chev">▸</span></summary>
+            <div class="hook-body">
+              <p class="hook-def">Use a physical action in the first second: placing the phone down, sliding an object into frame, entering the scene, or sudden movement.</p>
+              <div class="hook-ex"><span class="ex-tag acc">ACC</span><p>Slide the room key card across the screen, then cut to the balcony: "This key unlocked the best sunrise view I've had all year."</p></div>
+              <div class="hook-ex"><span class="ex-tag ttd">TTD</span><p>Start with a fast whip-pan from the park map to the ride entrance: "This is the first ride you should do when the gates open."</p></div>
+            </div>
+          </details>
+          <details class="hook-item">
+            <summary><span class="hook-num">8</span> Show the Result First<span class="chev">▸</span></summary>
+            <div class="hook-body">
+              <p class="hook-def">Begin with the payoff before explaining how or why — give viewers a reason to stay before the setup.</p>
+              <div class="hook-ex"><span class="ex-tag acc">ACC</span><p>Show the infinity pool at golden hour first: "This is why I'd come back to this resort, even though the room had one problem."</p></div>
+              <div class="hook-ex"><span class="ex-tag ttd">TTD</span><p>Show the final drop, fireworks, or best view first: "This moment made the 45-minute wait worth it."</p></div>
+            </div>
+          </details>
+          <details class="hook-item">
+            <summary><span class="hook-num">9</span> Question Hook<span class="chev">▸</span></summary>
+            <div class="hook-body">
+              <p class="hook-def">Ask a direct question that creates a knowledge gap: "Did you know…," "What would you do if…," "Is it just me, or…"</p>
+              <div class="hook-ex"><span class="ex-tag acc">ACC</span><p>"Did you know this resort has two beaches, but only one is good for swimming?"</p></div>
+              <div class="hook-ex"><span class="ex-tag ttd">TTD</span><p>"Is it just me, or is this the most underrated ride in the entire park?"</p></div>
+            </div>
+          </details>
+          <details class="hook-item">
+            <summary><span class="hook-num">10</span> I Tested It So You Don't Have To<span class="chev">▸</span></summary>
+            <div class="hook-body">
+              <p class="hook-def">Position the creator as the tester who saves the viewer time, money, or risk: "I tried every ___ so you don't have to."</p>
+              <div class="hook-ex"><span class="ex-tag acc">ACC</span><p>"I tried the cheapest room, the buffet, and the beach club at this resort so you don't have to guess what's worth paying for."</p></div>
+              <div class="hook-ex"><span class="ex-tag ttd">TTD</span><p>"I tested every paid add-on at this theme park so you know what to skip and what to buy."</p></div>
+            </div>
+          </details>
+        </div>
+        <h4 class="hook-guide-title">🎯 Which hook should you use?</h4>
+        <div class="table-scroll">
+          <table class="hook-table">
+            <thead><tr><th>Your Goal</th><th>Best Hook Types</th><th>Why It Fits</th></tr></thead>
+            <tbody>
+              <tr><td>Drive bookings or ticket interest</td><td>Best Way / Best Place · Show the Result First · Listicle Promise</td><td>Make the value visible quickly and help viewers imagine the trip outcome.</td></tr>
+              <tr><td>Help viewers avoid a bad choice</td><td>Mistake / Red Flag Warning · Problem + Solution · I Tested It So You Don't Have To</td><td>Create practical urgency and position the creator as a trusted filter.</td></tr>
+              <tr><td>Reach a specific travel segment</td><td>Audience Call-Out · Question Hook · Listicle Promise</td><td>Quickly identify who the video is for — families, couples, solo, foodies, budget, or thrill seekers.</td></tr>
+              <tr><td>Make ordinary footage feel watchable</td><td>Visual Motion Hook · Curiosity Discovery · Show the Result First</td><td>Add movement, surprise, or a visual payoff before the review explanation.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SHOWCASE ===================== -->
+<section class="section" id="showcase">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">Showcase</span>
+      <h2 class="section-title">Top videos from <span class="grad-text">the bootcamp</span></h2>
+    </div>
+    <div class="showcase reveal">
+      <div class="sc-icon">🎬</div>
+      <h3>Coming Soon — Top Videos Showcase</h3>
+      <p>The best-performing creator videos from the bootcamp will be featured here. Share your list of top videos and we'll spotlight them in a scrollable gallery. ✨</p>
+      <span class="sc-badge"><span class="pulse"></span> Curating the highlight reel</span>
+      <div class="sc-skeletons">
+        <div class="sk">▶</div><div class="sk">▶</div><div class="sk">▶</div><div class="sk">▶</div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div>
+      <a href="#top" class="brand"><span class="logo">GO</span><span>Bootcamp Hub<small>TikTok GO Creator Academy</small></span></a>
+      <p>Your all-in-one home base for the TikTok GO Creator Bootcamp — schedule, takeaways, tasks, POIs and showcase.</p>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <a href="#schedule">Webinar Schedule</a>
+        <a href="#takeaways">Easy Takeaways</a>
+        <a href="#tasks">Tasks &amp; Leaderboard</a>
+      </div>
+      <div class="footer-col">
+        <h4>Tools</h4>
+        <a href="https://item-trailers-holes-mpg.trycloudflare.com/" target="_blank" rel="noopener">Top POIs Finder ↗</a>
+        <a href="#showcase">Video Showcase</a>
+      </div>
+      <div class="footer-col">
+        <h4>Rewards</h4>
+        <a href="#tasks">$15 First Sale Bonus</a>
+        <a href="#tasks">$60+ Homework Cash</a>
+        <a href="#tasks">1–5% Sales Commission</a>
+      </div>
+    </div>
+  </div>
+  <div class="wrap copyright">
+    <span>© 2026 TikTok GO Creator Bootcamp. Internal creator resource.</span>
+    <span>Made for creators, by the Bootcamp team 💖</span>
+  </div>
+</footer>
+
+<!-- ===================== FLOATING COMMUNITY CTA ===================== -->
+<a class="community-fab" href="https://discord.gg/Q7e5PEVHtm" target="_blank" rel="noopener" aria-label="Join Our Community">
+  <svg class="community-ic" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M20.317 4.369a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.375-.445.865-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.009c.12.099.246.198.373.292a.077.077 0 0 1-.006.127c-.598.35-1.22.645-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.056c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.331c-1.183 0-2.157-1.086-2.157-2.42 0-1.332.955-2.418 2.157-2.418 1.21 0 2.176 1.095 2.157 2.419 0 1.333-.956 2.419-2.157 2.419zm7.975 0c-1.183 0-2.157-1.086-2.157-2.42 0-1.332.955-2.418 2.157-2.418 1.21 0 2.176 1.095 2.157 2.419 0 1.333-.946 2.419-2.157 2.419z"/></svg>
+  <span class="community-txt">Join Our Community</span>
+</a>
+
+<script>
+/* =====================================================================
+   ██  EASY-EDIT DATA  ██
+   Everything you'll want to update lives in this one block.
+   ---------------------------------------------------------------------
+   HOW TO ADD A WEBINAR RECORDING:
+     Find the session below and set  recording: "https://your-link"
+     Leave it as ""  (empty) to keep the "Recording coming soon" state.
+   HOW TO ADD A FUTURE WEBINAR:
+     Copy any object in WEBINARS and change the fields. status can be
+     "past", "live" or "upcoming".
+   ===================================================================== */
+
+const WEBINARS = [
+  {
+    title: "Kickoff Session #1",
+    date: "Mon · Aug 3, 2026 · PST",
+    status: "past",
+    desc: "Bootcamp kickoff — goals & expectations, TikTok GO basics: what it is and how to get started, plus Discord 101. (Kickoff #1 & #2 cover the same content — one shared recording.)",
+    recording: "https://bytedance.us.larkoffice.com/minutes/obusac628n95fek1x645wgvt?from=from_copylink"
+  },
+  {
+    title: "Kickoff Session #2",
+    date: "Thu · Aug 6, 2026 · PST",
+    status: "past",
+    desc: "Same content as Kickoff #1 — a repeat session so everyone could attend. Creator Center overview, the Dos & Don'ts of TikTok GO, and what counts as Qualified Content.",
+    recording: "https://bytedance.us.larkoffice.com/minutes/obusac628n95fek1x645wgvt?from=from_copylink"
+  },
+  {
+    title: "Class #1 — Brainstorm to Bankroll",
+    date: "Mon · Aug 10, 2026 · PST",
+    status: "past",
+    desc: "Stop pressing 'record' without a plan. Learn to script & strategize your shoots so every video serves a direct sales angle. Covers 0/low-cost content creation & Content Strategy Pt. 1.",
+    recording: "https://bytedance.usttp.larkoffice.com/minutes/obuseg95iwg5qh1447wby546?from=from_copylink",
+    videos: [
+      { url: "https://www.tiktok.com/@le.toystory/video/7619718926942866701", caption: "B-Roll of the Views in Times Square" },
+      { url: "https://www.tiktok.com/@rebalasha/video/7347738926469106986", caption: "Room Highlights from a Non-TTGO Creator" },
+      { url: "https://www.tiktok.com/@yeiramoss/video/7661391798622752031", caption: "In Spanish" }
+    ]
+  },
+  {
+    title: "Class #2 — B-Roll That Builds Trust",
+    date: "Wed · Aug 12, 2026 · PST",
+    status: "past",
+    desc: "Learn exactly what to capture while filming so your final video feels useful, credible, and irresistible to potential buyers.",
+    recording: "https://bytedance.usttp.larkoffice.com/minutes/obusc3477529o6de62994n4v?from=from_copylink",
+    join: "https://vc-us.larkoffice.com/j/991122666",
+    videos: [
+      { url: "https://www.tiktok.com/@trannchristinee/video/7648406478373555469", caption: "Establishing → Candid → Arrival → Reaction" },
+      { url: "https://www.tiktok.com/@mznikkibee2u/video/7635459667333778702", caption: "No-Face Content" },
+      { url: "https://www.tiktok.com/@design_crazes/video/7644642101048642847", caption: "#1 ACC Video in June" },
+      { url: "https://www.tiktok.com/@toberuby/video/7576853897034190093", caption: "Room Tour from Non-TTGO Creator" },
+      { url: "https://www.tiktok.com/@viajandoconmilena/video/7638807521821461791", caption: "Top ACC Video in Spanish" },
+      { url: "https://www.tiktok.com/@vegasstarfish/video/7650981556403703070", caption: "#1 TTD Video in June (The Sphere)" },
+      { url: "https://www.tiktok.com/@_pretty.pt/video/7650354481753836813", caption: "Chicago Boat Tour" },
+      { url: "https://www.tiktok.com/@theslickestsu/video/7630873175458401566", caption: "Doing the Math For Discounted Universal Tickets" }
+    ]
+  },
+  {
+    title: "Class #3 — Editing for the Algorithm and the Wallet",
+    date: "Mon · Aug 17, 2026 · PST",
+    status: "past",
+    desc: "Turn raw footage into a high-retention, high-conversion masterpiece that hooks attention and drives viewers to your link in bio. Includes ACC & TTD Content Guidelines.",
+    recording: "https://bytedance.usttp.larkoffice.com/minutes/obushvti91s634e3q121565s?from=from_copylink",
+    join: "https://vc-us.larkoffice.com/j/799812406"
+  },
+  {
+    title: "Class #4 — The Content Multiplier",
+    date: "Wed · Aug 19, 2026 · PST",
+    status: "upcoming",
+    desc: "Work smarter, not harder — tweak your video formula for different niches and stretch a single visit into a goldmine of sales-driven posts (1 Visit → 10 Contents). Content Strategy Pt. 2.",
+    recording: "",  // ← will be added after the session
+    join: "https://vc-us.larkoffice.com/j/209791798"
+  }
+];
+
+/* Easy Takeaways — pulled from the US TikTok GO Travel Creator Playbook (wiki):
+   "Reusing Your Own Footage", "10x content from 1 hotel visit", "Improve my CVR", "How to choose POI". */
+const TAKEAWAYS = [
+  { icon:"♻️", tag:"Reuse Footage", title:"Re-Edit, Never Repost", text:"Reposting the same video (even with new music or caption) isn't allowed. Re-editing your own footage into a NEW original video is — change the angle, edit style, highlights or voiceover." },
+  { icon:"🎥", tag:"Reuse Footage", title:"Maximize Every Visit", text:"Record more on every stay. Before you go, shortlist 5–10 content ideas — room tour, breakfast, pool service, favourite features — so one visit fuels many posts." },
+  { icon:"🧱", tag:"10x Content", title:"Plan Your Content Pillars", text:"Turn limited footage into 10x content with 3 pillars: Unique Feature Focus (spark curiosity), POV/Storytelling (sell emotion & aspiration), and Travel Hack/Review (honest value)." },
+  { icon:"🎯", tag:"10x Content", title:"Build a Content Library On-Site", text:"Don't film one video — capture enough for 5–10. Get wide/medium/close-up angles, details, food and authentic moments. Film in batches (rooms, then amenities, then food)." },
+  { icon:"💡", tag:"Boost CVR", title:"Lead With Value, Not the Sell", text:"Give viewers a reason to book: useful info, beautiful visuals, honest reviews and travel tips. Spotlight the property's unique selling points so the choice is obvious." },
+  { icon:"📣", tag:"Boost CVR", title:"Close With a Clear CTA + FOMO", text:"End every video telling people exactly what to do next — where to click and how to book. Surface discounts, promo codes and limited-time offers to turn interest into bookings." },
+  { icon:"🤝", tag:"Boost CVR", title:"Build Trust & Stay Patient", text:"People buy when they trust you — show authentic moments and genuine opinions with a strong hook. TTGO sales can land days or weeks later, so keep posting and let the algorithm work." },
+  { icon:"📍", tag:"Choose POI", title:"Prioritize the Top POIs", text:"Attend the webinars and watch the Discord for curated Top POI lists and live OTA promos. Not all POIs perform equally — prioritizing hot ones drives more sales and higher commission." }
+];
+
+/* Active tasks — 'progress' (0-100) is optional cohort-wide completion. */
+const TASKS = [
+  { type:"Leaderboard", ldb:true, name:"TikTok GO Grow!", window:"Rolling Campaign", hashtag:"#TikTokGOCreator", poi:"All POIs", req:"15s · 300 views", reward:"Up to $400 in rewards", progress:62 },
+  { type:"Task", name:"🌱 Quick Start Task", window:"Weeks 1–2", hashtag:"—", poi:"All POIs", req:"15s · 300 views", reward:"1 post = $5 promo coupon · 4 posts = $5 cash", progress:74 },
+  { type:"Task", name:"🌿 Bootcamp Plus", window:"Weeks 2–3", hashtag:"—", poi:"All POIs", req:"15s · 300 views", reward:"3 posts = $8 cash · 6 posts = $16 cash", progress:41 },
+  { type:"Task", name:"🌻 Bootcamp Boost", window:"Weeks 3–4", hashtag:"—", poi:"Hot POIs", req:"15s · 500 views", reward:"3 posts = $10 cash · 6 posts = $10 cash", progress:28 }
+];
+
+/* Leaderboard — placeholder standings. Replace names/posts/points with live data. */
+const LEADERBOARD = [
+  { name:"survivingmy7", posts:12, points:980 },
+  { name:"from.romina", posts:11, points:910 },
+  { name:"venturesandvines", posts:10, points:845 },
+  { name:"vibewithmarcy", posts:9, points:790 },
+  { name:"bybeabravo", posts:9, points:760 },
+  { name:"lisys.world", posts:8, points:705 },
+  { name:"nashintune", posts:7, points:640 }
+];
+const LEADERBOARD_NOTE = "Placeholder standings — connect to the Bootcamp tracker to show live results.";
+
+/* =====================================================================
+   RENDERING  (no need to edit below)
+   ===================================================================== */
+const statusMeta = {
+  past:     { tag:"Recorded", cls:"past" },
+  live:     { tag:"● Live / Today", cls:"live" },
+  upcoming: { tag:"Upcoming", cls:"up" }
+};
+
+document.getElementById("timeline").innerHTML = WEBINARS.map(w => {
+  const m = statusMeta[w.status] || statusMeta.upcoming;
+  const watch = w.recording
+    ? `<a class="rec available" href="${w.recording}" target="_blank" rel="noopener">▶ Watch Recording</a>`
+    : "";
+  const join = (w.join && (w.status === "live" || w.status === "upcoming"))
+    ? `<a class="${w.status === "live" ? "rec join-live" : "rec join"}" href="${w.join}" target="_blank" rel="noopener">${w.status === "live" ? "🔴 Join Live" : "🎥 Join Webinar"}</a>`
+    : "";
+  const rec = (watch || join)
+    ? `<div class="wcard-actions">${join}${watch}</div>`
+    : `<span class="rec pending">⏳ Recording coming soon</span>`;
+  const vids = (w.videos && w.videos.length)
+    ? `<div class="class-videos">
+        <button type="button" class="cv-title" aria-expanded="false">
+          <span>🎬 Videos Shown in Class</span>
+          <span class="cv-arrow">▼</span>
+        </button>
+        <div class="cv-wrap">
+          <ul class="cv-list">
+            ${w.videos.map(v => `<li><a href="${v.url}" target="_blank" rel="noopener"><span class="cv-ic">🎬</span><span class="cv-cap">${v.caption}</span><span class="cv-go">↗</span></a></li>`).join("")}
+          </ul>
+        </div>
+      </div>`
+    : "";
+  return `
+  <div class="tl-item ${w.status} reveal">
+    <span class="tl-dot"></span>
+    <div class="wcard">
+      <div class="wcard-top">
+        <div>
+          <h3>${w.title}</h3>
+          <span class="date">📅 ${w.date}</span>
+        </div>
+        <span class="tag ${m.cls}">${m.tag}</span>
+      </div>
+      <p class="desc">${w.desc}</p>
+      ${rec}
+      ${vids}
+    </div>
+  </div>`;
+}).join("");
+
+/* Collapsible "Videos Shown in Class" toggles (collapsed by default) */
+document.querySelectorAll(".class-videos .cv-title").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const wrap = btn.nextElementSibling;
+    const open = btn.getAttribute("aria-expanded") === "true";
+    btn.setAttribute("aria-expanded", String(!open));
+    wrap.classList.toggle("open", !open);
+  });
+});
+
+document.getElementById("takeaways-grid").innerHTML = TAKEAWAYS.map(t => `
+  <div class="tk reveal">
+    <span class="pill">${t.tag}</span>
+    <div class="ico">${t.icon}</div>
+    <h3>${t.title}</h3>
+    <p>${t.text}</p>
+  </div>`).join("");
+
+/* =====================================================================
+   INTERACTIONS
+   ===================================================================== */
+// nav scroll state
+const nav = document.getElementById("nav");
+window.addEventListener("scroll", () => nav.classList.toggle("scrolled", window.scrollY > 20));
+
+// mobile menu
+const burger = document.getElementById("burger");
+const navLinks = document.getElementById("navLinks");
+burger.addEventListener("click", () => navLinks.classList.toggle("open"));
+navLinks.querySelectorAll("a").forEach(a => a.addEventListener("click", () => navLinks.classList.remove("open")));
+
+// reveal on scroll (with failsafe so content is never stuck hidden)
+if ("IntersectionObserver" in window) {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } });
+  }, { threshold:.08, rootMargin:"0px 0px 15% 0px" });
+  document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+  // safety net: reveal anything still hidden shortly after load (print/PDF, full-page capture, tall viewports)
+  window.addEventListener("load", () => setTimeout(() => document.querySelectorAll(".reveal:not(.in)").forEach(el => el.classList.add("in")), 400));
+} else {
+  document.querySelectorAll(".reveal").forEach(el => el.classList.add("in"));
+}
+</script>
+</body>
+</html>
