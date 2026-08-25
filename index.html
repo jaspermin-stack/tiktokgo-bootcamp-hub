@@ -934,10 +934,16 @@ const WEBINARS = [
   {
     title: "Bootcamp Content Clinic #1",
     date: "Mon · Aug 24, 2026 · 4:00 PM PST",
-    status: "upcoming",
+    status: "past",
     desc: "Live content clinic — bring your videos and questions for hands-on feedback. Get personalized tips to sharpen your hooks, edits, and sales angles before you post.",
-    recording: "",
-    join: "https://vc-us.larkoffice.com/j/860907258"
+    recording: "https://bytedance.usttp.larkoffice.com/minutes/obusmo6mf174p58c438tu9tc?from=from_copylink",
+    join: "https://vc-us.larkoffice.com/j/860907258",
+    videosLabel: "🏆 Clinic Standouts",
+    videos: [
+      { url: "https://www.tiktok.com/@bybeabravo/video/7676181753987370271", caption: "@bybeabravo" },
+      { url: "https://www.tiktok.com/@travelfindsbyjana/video/7675488730232147230", caption: "@travelfindsbyjana" },
+      { url: "https://www.tiktok.com/@tracyw128/video/7676452234149842190", caption: "@tracyw128" }
+    ]
   },
   {
     title: "Bootcamp Content Clinic #2",
@@ -1004,7 +1010,7 @@ document.getElementById("timeline").innerHTML = WEBINARS.map(w => {
   const vids = (w.videos && w.videos.length)
     ? `<div class="class-videos">
         <button type="button" class="cv-title" aria-expanded="false">
-          <span>🎬 Videos Shown in Class</span>
+          <span>${w.videosLabel || "🎬 Videos Shown in Class"}</span>
           <span class="cv-arrow">▼</span>
         </button>
         <div class="cv-wrap">
